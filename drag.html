@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+	随心, 随笔...
+</title>
+<style type="text/css">
+	.drag {
+		background: red;
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+</style>
+<script type="text/javascript">
+window.onload = function () {
+	var drag = new Drag ();
+	drag.init();
+};
+function Drag () {
+	this.oDrag = document.getElementById('drag');
+	this.disX = 0;
+	this.disY = 0;
+}
+Drag.prototype.init = function () {
+	this.oDrag.onmousedown = this.fnDown;
+	document.onmouseup = this.fnUp;
+	return false;
+}
+Drag.prototype.fnDown = function (ev) {
+	var This = this;
+
+	this.disX = ev.clientX - this.offsetLeft;
+	this.disY = ev.clientY - this.offsetTop;
+	
+	document.onmousemove = function (ev) {
+		This.style.left = ev.clientX - This.disX + 'px';
+		This.style.top = ev.clientY - This.disY + 'px';
+	};
+}
+Drag.prototype.fnUp = function () {
+	document.onmousedown = null;
+	document.onmousemove = null;
+}
+</script>
+</head>
+<body>
+<div class="drag-box">
+	<div id="drag" class="drag"></div>
+</div>
+</body>
+</html>

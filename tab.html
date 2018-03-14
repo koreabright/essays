@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+	随心, 随笔...
+</title>
+<style type="text/css">
+	.tab-box .box div {
+		width: 200px;
+		height: 200px;
+		border: 1px #000 solid;
+		display: none;
+	}
+	.active {
+		background: red;
+	}
+	.tab-box .box .show {
+		display: block;
+	}
+</style>
+<script type="text/javascript">
+window.onload = function () {
+	var tab = new Tab();
+
+	tab.init();
+};
+function Tab () {
+	this.oTab = document.getElementById('tab');
+	this.oBox = document.getElementById('box');
+
+	this.aBtns = this.oTab.getElementsByTagName('input');
+	this.aBoxs = this.oBox.getElementsByTagName('div');
+
+	this.iNow = 0;
+}
+Tab.prototype.init = function () {
+	for (var i = 0; i < this.aBtns.length; i++) {
+		var This = this;
+		this.aBtns[i].index = i;
+		this.aBtns[i].onmouseover = function () {
+			This.change(this);
+		};
+	}
+}
+Tab.prototype.change = function (obj) {		
+	for (var j = 0; j < this.aBtns.length; j++) {
+		this.aBtns[j].className = '';
+		this.aBoxs[j].className = '';
+	}
+	obj.className = 'active';
+	this.aBoxs[obj.index].className = 'show';
+}
+Tab.prototype.autoPlay = function () {
+	var This = this;
+
+	setInterval(function () {
+		if (This.iNow === This.aBtns.length - 1) {
+			This.iNow = 0;
+		} else {
+			This.iNow++;
+		}
+
+		for (var i = 0; i < This.aBtns.length; i++) {
+			This.aBtns[i].className = '';
+			This.aBoxs[i].className = '';
+		}
+		This.aBtns[This.iNow].className = 'active';
+		This.aBoxs[This.iNow].className = 'show';
+	}, 1000);
+}
+
+
+
+</script>
+</head>
+<body>
+<div id="tabBox" class="tab-box">
+	<div id="tab" class="tab">
+		<input type="button" value="1" class="active" />
+		<input type="button" value="2" />
+		<input type="button" value="3" />
+		<input type="button" value="4" />
+	</div>
+	<div id="box" class="box">
+		<div class="show">111</div>
+		<div>222</div>
+		<div>333</div>
+		<div>444</div>
+	</div>
+</div>
+</body>
+</html>
